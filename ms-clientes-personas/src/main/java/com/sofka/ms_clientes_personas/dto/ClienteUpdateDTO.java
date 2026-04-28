@@ -1,5 +1,7 @@
 package com.sofka.ms_clientes_personas.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -12,7 +14,7 @@ public class ClienteUpdateDTO {
     @Size(max = 20)
     private String genero;
 
-    @Size(min = 0, max = 150)
+    @Min(0) @Max(150)
     private Integer edad;
 
     @Size(max = 20)

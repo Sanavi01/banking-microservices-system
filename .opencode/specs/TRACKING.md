@@ -17,10 +17,10 @@
 
 | Fase | Estado |
 |------|--------|
-| **Spec** | `[x]` DRAFT → `[ ]` APPROVED |
+| **Spec** | `[x]` DRAFT → `[x]` APPROVED |
 | **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
@@ -36,9 +36,9 @@
 - [x] Config: `application.yml` (PostgreSQL + RabbitMQ)
 
 #### Checklist Tests
-- [ ] `ClienteServiceTest` (11 tests)
-- [ ] `ClienteRepositoryTest` (2 tests)
-- [ ] `ClienteControllerIntegrationTest` (14 tests)
+- [x] `ClienteServiceTest` (11 tests)
+- [x] `ClienteRepositoryTest` (2 tests)
+- [x] `ClienteControllerIntegrationTest` (14 tests)
 
 ---
 
