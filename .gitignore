@@ -1,0 +1,76 @@
+# === Gradle ===
+.gradle/
+build/
+target/
+!gradle/wrapper/gradle-wrapper.jar
+
+# === Maven (fallback) ===
+target/
+*.jar
+*.war
+*.ear
+
+# === IDE - IntelliJ IDEA ===
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# === IDE - VS Code ===
+.vscode/
+*.code-workspace
+
+# === IDE - Eclipse ===
+.settings/
+.project
+.classpath
+bin/
+*.prefs
+
+# === IDE - NetBeans ===
+nbproject/private/
+nbactions.xml
+nb-configuration.xml
+*.orig
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# === Environment / Secrets ===
+.env
+*.local.properties
+*.local.yml
+*.local.yaml
+application-local.properties
+application-local.yml
+secrets/
+
+# === Logs ===
+*.log
+logs/
+
+# === Docker ===
+volumes/
+pgdata/
+docker-data/
+
+# === Backup / Temp ===
+*.bak
+*.tmp
+*.temp
+
+# === JPA / Hibernate ===
+*.hbm.xml
+
+# === Python (legacy, if any) ===
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
