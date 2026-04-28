@@ -75,18 +75,21 @@
 | Fase | Estado |
 |------|--------|
 | **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
-| **Implementación** | `[ ]` IN_PROGRESS → `[ ]` COMPLETED |
+| **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
 | **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
 | **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
-- [ ] Entidad JPA: `Movimiento`
-- [ ] DTOs: `MovimientoCreateDTO`, `MovimientoResponseDTO`
-- [ ] Repositorio: `MovimientoRepository` (con query `sumValorByCuentaId`)
-- [ ] Service: `MovimientoService` (validación saldo + registro)
-- [ ] Controller: `MovimientoController` (POST + GET)
-- [ ] Excepciones: `InsufficientBalanceException`, `InvalidMovementException`
+- [x] Entidad JPA: `Movimiento`
+- [x] DTOs: `MovimientoCreateDTO`, `MovimientoResponseDTO`
+- [x] Mapper: `MovimientoMapper` (SRP)
+- [x] Repositorio: `MovimientoRepository` (con query `sumValorByCuentaId`)
+- [x] Service: `MovimientoService` (interfaz) + `MovimientoServiceImpl` (validación saldo + registro)
+- [x] Controller: `MovimientoController` (POST + GET)
+- [x] Excepciones: `InsufficientBalanceException` (422), `InvalidMovementException` (400)
+- [x] GlobalExceptionHandler extendido con nuevos handlers
+- [x] Strategy Pattern: `TipoMovimientoStrategy`, `DepositoStrategy`, `RetiroStrategy`, `TipoMovimientoResolver`
 
 #### Checklist Tests
 - [ ] `MovimientoServiceTest` (12 tests)
@@ -125,6 +128,6 @@
 |------|--------------|----|---------------|----------|---------|----|
 | SPEC-001 | ms-clientes-personas | CRUD Clientes | `[ ]` | `[ ]` (13) | `[ ]` (14) | `[ ]` |
 | SPEC-002 | ms-cuentas-movimientos | CRUD Cuentas | `[ ]` | `[ ]` (12) | `[ ]` (14) | `[ ]` |
-| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[ ]` | `[ ]` (14) | `[ ]` (12) | `[ ]` |
+| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[ ]` (14) | `[ ]` (12) | `[ ]` |
 | SPEC-004 | ms-cuentas-movimientos | Reportes | `[ ]` | `[ ]` (9) | `[ ]` (9) | `[ ]` |
 | **Totales** | | | | **48 tests** | **49 tests** | |

@@ -7,6 +7,7 @@ import com.sofka.ms_cuentas_movimientos.exception.ResourceNotFoundException;
 import com.sofka.ms_cuentas_movimientos.mapper.CuentaMapper;
 import com.sofka.ms_cuentas_movimientos.repository.ClienteRepository;
 import com.sofka.ms_cuentas_movimientos.repository.CuentaRepository;
+import com.sofka.ms_cuentas_movimientos.repository.MovimientoRepository;
 import com.sofka.ms_cuentas_movimientos.service.impl.CuentaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.never;
@@ -33,6 +35,7 @@ class CuentaServiceTest {
 
     @Mock private CuentaRepository cuentaRepository;
     @Mock private ClienteRepository clienteRepository;
+    @Mock private MovimientoRepository movimientoRepository;
     @Mock private CuentaMapper mapper;
 
     @InjectMocks
@@ -42,13 +45,14 @@ class CuentaServiceTest {
     private Cuenta cuenta;
     private CuentaResponseDTO responseDTO;
     private static final String CLIENTE_ID = "a1b2c3d4-e5f6-7890-abcd-ef1234567890";
+    private static final BigDecimal SALDO = new BigDecimal("2000.00");
 
     @BeforeEach
     void setUp() {
         createDTO = new CuentaCreateDTO();
         createDTO.setNumeroCuenta("478758");
         createDTO.setTipoCuenta("Ahorro");
-        createDTO.setSaldoInicial(new BigDecimal("2000.00"));
+        createDTO.setSaldoInicial(SALDO);
         createDTO.setEstado(true);
         createDTO.setClienteId(CLIENTE_ID);
 
@@ -56,7 +60,7 @@ class CuentaServiceTest {
         cuenta.setId(1L);
         cuenta.setNumeroCuenta("478758");
         cuenta.setTipoCuenta("Ahorro");
-        cuenta.setSaldoInicial(new BigDecimal("2000.00"));
+        cuenta.setSaldoInicial(SALDO);
         cuenta.setEstado(true);
         cuenta.setClienteId(CLIENTE_ID);
 
@@ -64,7 +68,8 @@ class CuentaServiceTest {
                 .id(1L)
                 .numeroCuenta("478758")
                 .tipoCuenta("Ahorro")
-                .saldoInicial(new BigDecimal("2000.00"))
+                .saldoInicial(SALDO)
+                .saldoActual(SALDO)
                 .estado(true)
                 .clienteId(CLIENTE_ID)
                 .build();
@@ -77,7 +82,7 @@ class CuentaServiceTest {
         given(cuentaRepository.existsByNumeroCuenta("478758")).willReturn(false);
         given(mapper.toEntity(createDTO)).willReturn(cuenta);
         given(cuentaRepository.save(cuenta)).willReturn(cuenta);
-        given(mapper.toResponseDTO(cuenta)).willReturn(responseDTO);
+        given(mapper.toResponseDTO(eq(cuenta), any(BigDecimal.class))).willReturn(responseDTO);
 
         CuentaResponseDTO result = service.create(createDTO);
 
@@ -114,7 +119,8 @@ class CuentaServiceTest {
     @DisplayName("UT-2.4: findById() retorna DTO cuando existe")
     void findById_shouldReturnDto_whenExists() {
         given(cuentaRepository.findById(1L)).willReturn(Optional.of(cuenta));
-        given(mapper.toResponseDTO(cuenta)).willReturn(responseDTO);
+        given(movimientoRepository.sumValorByCuentaId(1L)).willReturn(Optional.of(BigDecimal.ZERO));
+        given(mapper.toResponseDTO(eq(cuenta), any(BigDecimal.class))).willReturn(responseDTO);
 
         CuentaResponseDTO result = service.findById(1L);
 
@@ -136,7 +142,8 @@ class CuentaServiceTest {
     @DisplayName("UT-2.6: findAll() retorna lista de DTOs")
     void findAll_shouldReturnList() {
         given(cuentaRepository.findAll()).willReturn(List.of(cuenta));
-        given(mapper.toResponseDTO(cuenta)).willReturn(responseDTO);
+        given(movimientoRepository.sumValorByCuentaId(1L)).willReturn(Optional.of(BigDecimal.ZERO));
+        given(mapper.toResponseDTO(eq(cuenta), any(BigDecimal.class))).willReturn(responseDTO);
 
         List<CuentaResponseDTO> result = service.findAll();
 
@@ -152,8 +159,9 @@ class CuentaServiceTest {
         updateDTO.setSaldoInicial(new BigDecimal("3000.00"));
 
         given(cuentaRepository.findById(1L)).willReturn(Optional.of(cuenta));
+        given(movimientoRepository.sumValorByCuentaId(1L)).willReturn(Optional.of(BigDecimal.ZERO));
         given(cuentaRepository.save(cuenta)).willReturn(cuenta);
-        given(mapper.toResponseDTO(cuenta)).willReturn(responseDTO);
+        given(mapper.toResponseDTO(eq(cuenta), any(BigDecimal.class))).willReturn(responseDTO);
 
         CuentaResponseDTO result = service.update(1L, updateDTO);
 
@@ -168,8 +176,9 @@ class CuentaServiceTest {
         patchDTO.setEstado(false);
 
         given(cuentaRepository.findById(1L)).willReturn(Optional.of(cuenta));
+        given(movimientoRepository.sumValorByCuentaId(1L)).willReturn(Optional.of(BigDecimal.ZERO));
         given(cuentaRepository.save(cuenta)).willReturn(cuenta);
-        given(mapper.toResponseDTO(cuenta)).willReturn(responseDTO);
+        given(mapper.toResponseDTO(eq(cuenta), any(BigDecimal.class))).willReturn(responseDTO);
 
         CuentaResponseDTO result = service.patch(1L, patchDTO);
 
