@@ -1,6 +1,6 @@
 ---
 id: SPEC-001
-status: DRAFT
+status: APPROVED
 feature: hu-01-crud-clientes
 created: 2026-04-28
 updated: 2026-04-28
