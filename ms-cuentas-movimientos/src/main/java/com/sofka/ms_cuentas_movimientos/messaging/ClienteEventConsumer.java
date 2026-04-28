@@ -8,8 +8,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -19,11 +17,12 @@ public class ClienteEventConsumer {
 
     @RabbitListener(queues = "${banking.rabbitmq.queue}")
     @Transactional
-    public void handleClienteEvent(Map<String, Object> event) {
-        String evento = (String) event.get("evento");
-        String clienteId = (String) event.get("clienteId");
-        String nombre = (String) event.get("nombre");
-        Boolean estado = event.get("estado") != null ? (Boolean) event.get("estado") : true;
+    public void handleClienteEvent(String json) {
+        String evento = extractField(json, "evento");
+        String clienteId = extractField(json, "clienteId");
+        String nombre = extractField(json, "nombre");
+        String estadoStr = extractField(json, "estado");
+        Boolean estado = "true".equals(estadoStr);
 
         switch (evento) {
             case "CLIENTE_CREADO" -> {
@@ -43,6 +42,22 @@ public class ClienteEventConsumer {
                 });
             }
             default -> log.warn("Evento desconocido: {}", evento);
+        }
+    }
+
+    private String extractField(String json, String field) {
+        String key = "\"" + field + "\":";
+        int start = json.indexOf(key);
+        if (start == -1) return "";
+        start += key.length();
+        if (json.charAt(start) == '"') {
+            start++;
+            int end = json.indexOf('"', start);
+            return json.substring(start, end);
+        } else {
+            int end = json.indexOf(',', start);
+            if (end == -1) end = json.indexOf('}', start);
+            return json.substring(start, end).trim();
         }
     }
 }
