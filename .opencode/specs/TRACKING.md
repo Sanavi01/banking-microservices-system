@@ -17,25 +17,28 @@
 
 | Fase | Estado |
 |------|--------|
-| **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
-| **Implementación** | `[ ]` IN_PROGRESS → `[ ]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Spec** | `[x]` DRAFT → `[x]` APPROVED |
+| **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
-- [ ] Entidades JPA: `Persona`, `Cliente` (herencia JOINED)
-- [ ] DTOs: `ClienteCreateDTO`, `ClienteUpdateDTO`, `ClientePatchDTO`, `ClienteResponseDTO`
-- [ ] Repositorios: `PersonaRepository`, `ClienteRepository`
-- [ ] Service: `ClienteService` (CRUD + hash contraseña + validaciones)
-- [ ] Controller: `ClienteController` (GET/POST/PUT/PATCH/DELETE)
-- [ ] RabbitMQ Producer: `ClienteEventPublisher`
-- [ ] Excepciones: `GlobalExceptionHandler`, `ResourceNotFoundException`
+- [x] Entidades JPA: `Persona`, `Cliente` (herencia JOINED)
+- [x] DTOs: `ClienteCreateDTO`, `ClienteUpdateDTO`, `ClientePatchDTO`, `ClienteResponseDTO`
+- [x] Repositorios: `PersonaRepository`, `ClienteRepository`
+- [x] Service: `ClienteService` (interfaz) + `ClienteServiceImpl` + `PasswordService`
+- [x] Mapper: `ClienteMapper` (Entity ↔ DTO)
+- [x] Controller: `ClienteController` (GET/POST/PUT/PATCH/DELETE)
+- [x] RabbitMQ Producer: `ClienteEventPublisher` + `ClienteEventDTO`
+- [x] RabbitMQ Config: `RabbitMQConfig` (exchange + JSON converter)
+- [x] Excepciones: `GlobalExceptionHandler`, `ResourceNotFoundException`, `DuplicateResourceException`
+- [x] Config: `application.yml` (PostgreSQL + RabbitMQ)
 
 #### Checklist Tests
-- [ ] `ClienteServiceTest` (11 tests)
-- [ ] `ClienteRepositoryTest` (2 tests)
-- [ ] `ClienteControllerIntegrationTest` (14 tests)
+- [x] `ClienteServiceTest` (11 tests)
+- [x] `ClienteRepositoryTest` (2 tests)
+- [x] `ClienteControllerIntegrationTest` (14 tests)
 
 ---
 
