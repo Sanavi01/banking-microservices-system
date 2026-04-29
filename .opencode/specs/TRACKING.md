@@ -103,17 +103,17 @@
 | Fase | Estado |
 |------|--------|
 | **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
-| **Implementación** | `[ ]` IN_PROGRESS → `[ ]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
-- [ ] DTOs: `ReporteRequest`, `ReporteResponseDTO` (con `@JsonProperty` español)
-- [ ] Query JPQL en `MovimientoRepository`: filtro por clienteId + rango fechas
-- [ ] Service: `ReporteService` (filtro + validación fechas + mapeo)
-- [ ] Controller: `ReporteController` (GET `/reportes`)
-- [ ] Excepción: `InvalidDateRangeException`
+- [x] DTOs: `ReporteRequest`, `ReporteResponseDTO` (con `@JsonProperty` español)
+- [x] Query JPQL en `MovimientoRepository`: filtro por clienteId + rango fechas
+- [x] Service: `ReporteService` (filtro + validación fechas + mapeo)
+- [x] Controller: `ReporteController` (GET `/reportes`)
+- [x] Excepción: `InvalidDateRangeException`
 
 #### Checklist Tests
 - [ ] `ReporteServiceTest` (8 tests)
@@ -129,5 +129,5 @@
 | SPEC-001 | ms-clientes-personas | CRUD Clientes | `[ ]` | `[ ]` (13) | `[ ]` (14) | `[ ]` |
 | SPEC-002 | ms-cuentas-movimientos | CRUD Cuentas | `[ ]` | `[ ]` (12) | `[ ]` (14) | `[ ]` |
 | SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[x]` (14) | `[x]` (12) | `[ ]` |
-| SPEC-004 | ms-cuentas-movimientos | Reportes | `[ ]` | `[ ]` (9) | `[ ]` (9) | `[ ]` |
+| SPEC-004 | ms-cuentas-movimientos | Reportes | `[x]` | `[x]` (9) | `[x]` (9) | `[ ]` |
 | **Totales** | | | | **48 tests** | **49 tests** | |
