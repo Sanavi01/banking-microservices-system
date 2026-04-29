@@ -1,6 +1,6 @@
 ---
 id: SPEC-002
-status: DRAFT
+status: APPROVED
 feature: hu-02-crud-cuentas
 created: 2026-04-28
 updated: 2026-04-28
@@ -385,20 +385,20 @@ public class ClienteEventConsumer {
 ## 4. TAREAS DE IMPLEMENTACIÓN
 
 ### Backend
-- [ ] Crear entidad `Cliente` (copia local)
-- [ ] Crear entidad `Cuenta`
-- [ ] Implementar `CuentaCreateDTO`, `CuentaUpdateDTO`, `CuentaPatchDTO`, `CuentaResponseDTO`
-- [ ] Implementar `ClienteRepository` (JPA)
-- [ ] Implementar `CuentaRepository` (JPA)
-- [ ] Implementar `ClienteEventConsumer` (RabbitMQ Consumer)
-- [ ] Implementar `CuentaService` — lógica CRUD + validaciones
-- [ ] Implementar `CuentaController` con GET/POST/PUT/PATCH/DELETE
-- [ ] Configurar RabbitMQ (cola `cliente.queue`, exchange `banking.exchange`)
+- [x] Crear entidad `Cliente` (copia local)
+- [x] Crear entidad `Cuenta`
+- [x] Implementar `CuentaCreateDTO`, `CuentaUpdateDTO`, `CuentaPatchDTO`, `CuentaResponseDTO`
+- [x] Implementar `ClienteRepository` (JPA)
+- [x] Implementar `CuentaRepository` (JPA)
+- [x] Implementar `ClienteEventConsumer` (RabbitMQ Consumer)
+- [x] Implementar `CuentaService` — lógica CRUD + validaciones
+- [x] Implementar `CuentaController` con GET/POST/PUT/PATCH/DELETE
+- [x] Configurar RabbitMQ (cola `cliente.queue`, exchange `banking.exchange`)
 
 ### Pruebas Unitarias
-- [ ] `CuentaServiceTest` — 9 tests (UT-2.1 a UT-2.9)
-- [ ] `CuentaRepositoryTest` — 2 tests (UT-2.10, UT-2.11)
-- [ ] `ClienteEventConsumerTest` — 1 test (UT-2.12)
+- [x] `CuentaServiceTest` — 9 tests (UT-2.1 a UT-2.9)
+- [x] `CuentaRepositoryTest` — 2 tests (UT-2.10, UT-2.11)
+- [x] `ClienteEventConsumerTest` — 1 test (UT-2.12)
 
 ### Pruebas de Integración
 - [ ] `CuentaControllerIntegrationTest` — 14 tests (IT-2.1 a IT-2.14)

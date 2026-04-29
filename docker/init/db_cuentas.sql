@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS movimientos (
     valor DECIMAL(15,2) NOT NULL,
     saldo DECIMAL(15,2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (cuenta_id) REFERENCES cuentas(id)
 );
 

@@ -7,10 +7,12 @@ import com.sofka.ms_cuentas_movimientos.exception.ResourceNotFoundException;
 import com.sofka.ms_cuentas_movimientos.mapper.CuentaMapper;
 import com.sofka.ms_cuentas_movimientos.repository.ClienteRepository;
 import com.sofka.ms_cuentas_movimientos.repository.CuentaRepository;
+import com.sofka.ms_cuentas_movimientos.repository.MovimientoRepository;
 import com.sofka.ms_cuentas_movimientos.service.CuentaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,6 +22,7 @@ public class CuentaServiceImpl implements CuentaService {
 
     private final CuentaRepository cuentaRepository;
     private final ClienteRepository clienteRepository;
+    private final MovimientoRepository movimientoRepository;
     private final CuentaMapper mapper;
 
     @Override
@@ -36,14 +39,14 @@ public class CuentaServiceImpl implements CuentaService {
 
         Cuenta cuenta = mapper.toEntity(dto);
         Cuenta saved = cuentaRepository.save(cuenta);
-        return mapper.toResponseDTO(saved);
+        return mapper.toResponseDTO(saved, dto.getSaldoInicial());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CuentaResponseDTO> findAll() {
         return cuentaRepository.findAll().stream()
-                .map(mapper::toResponseDTO)
+                .map(c -> mapper.toResponseDTO(c, calcularSaldoActual(c)))
                 .toList();
     }
 
@@ -53,7 +56,7 @@ public class CuentaServiceImpl implements CuentaService {
         Cuenta cuenta = cuentaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                     "Cuenta no encontrada: " + id));
-        return mapper.toResponseDTO(cuenta);
+        return mapper.toResponseDTO(cuenta, calcularSaldoActual(cuenta));
     }
 
     @Override
@@ -69,7 +72,7 @@ public class CuentaServiceImpl implements CuentaService {
 
         mapper.updateEntity(cuenta, dto);
         Cuenta saved = cuentaRepository.save(cuenta);
-        return mapper.toResponseDTO(saved);
+        return mapper.toResponseDTO(saved, calcularSaldoActual(saved));
     }
 
     @Override
@@ -80,7 +83,7 @@ public class CuentaServiceImpl implements CuentaService {
 
         mapper.patchEntity(cuenta, dto);
         Cuenta saved = cuentaRepository.save(cuenta);
-        return mapper.toResponseDTO(saved);
+        return mapper.toResponseDTO(saved, calcularSaldoActual(saved));
     }
 
     @Override
@@ -89,5 +92,12 @@ public class CuentaServiceImpl implements CuentaService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                     "Cuenta no encontrada: " + id));
         cuentaRepository.delete(cuenta);
+    }
+
+    private BigDecimal calcularSaldoActual(Cuenta cuenta) {
+        BigDecimal sumaMovimientos = movimientoRepository
+                .sumValorByCuentaId(cuenta.getId())
+                .orElse(BigDecimal.ZERO);
+        return cuenta.getSaldoInicial().add(sumaMovimientos);
     }
 }
