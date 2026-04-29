@@ -17,25 +17,28 @@
 
 | Fase | Estado |
 |------|--------|
-| **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
-| **Implementación** | `[ ]` IN_PROGRESS → `[ ]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Spec** | `[x]` DRAFT → `[x]` APPROVED |
+| **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
-- [ ] Entidades JPA: `Persona`, `Cliente` (herencia JOINED)
-- [ ] DTOs: `ClienteCreateDTO`, `ClienteUpdateDTO`, `ClientePatchDTO`, `ClienteResponseDTO`
-- [ ] Repositorios: `PersonaRepository`, `ClienteRepository`
-- [ ] Service: `ClienteService` (CRUD + hash contraseña + validaciones)
-- [ ] Controller: `ClienteController` (GET/POST/PUT/PATCH/DELETE)
-- [ ] RabbitMQ Producer: `ClienteEventPublisher`
-- [ ] Excepciones: `GlobalExceptionHandler`, `ResourceNotFoundException`
+- [x] Entidades JPA: `Persona`, `Cliente` (herencia JOINED)
+- [x] DTOs: `ClienteCreateDTO`, `ClienteUpdateDTO`, `ClientePatchDTO`, `ClienteResponseDTO`
+- [x] Repositorios: `PersonaRepository`, `ClienteRepository`
+- [x] Service: `ClienteService` (interfaz) + `ClienteServiceImpl` + `PasswordService`
+- [x] Mapper: `ClienteMapper` (Entity ↔ DTO)
+- [x] Controller: `ClienteController` (GET/POST/PUT/PATCH/DELETE)
+- [x] RabbitMQ Producer: `ClienteEventPublisher` + `ClienteEventDTO`
+- [x] RabbitMQ Config: `RabbitMQConfig` (exchange + JSON converter)
+- [x] Excepciones: `GlobalExceptionHandler`, `ResourceNotFoundException`, `DuplicateResourceException`
+- [x] Config: `application.yml` (PostgreSQL + RabbitMQ)
 
 #### Checklist Tests
-- [ ] `ClienteServiceTest` (11 tests)
-- [ ] `ClienteRepositoryTest` (2 tests)
-- [ ] `ClienteControllerIntegrationTest` (14 tests)
+- [x] `ClienteServiceTest` (11 tests)
+- [x] `ClienteRepositoryTest` (2 tests)
+- [x] `ClienteControllerIntegrationTest` (14 tests)
 
 ---
 
@@ -71,24 +74,27 @@
 
 | Fase | Estado |
 |------|--------|
-| **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
-| **Implementación** | `[ ]` IN_PROGRESS → `[ ]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Spec** | `[x]` DRAFT → `[x]` APPROVED |
+| **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
-- [ ] Entidad JPA: `Movimiento`
-- [ ] DTOs: `MovimientoCreateDTO`, `MovimientoResponseDTO`
-- [ ] Repositorio: `MovimientoRepository` (con query `sumValorByCuentaId`)
-- [ ] Service: `MovimientoService` (validación saldo + registro)
-- [ ] Controller: `MovimientoController` (POST + GET)
-- [ ] Excepciones: `InsufficientBalanceException`, `InvalidMovementException`
+- [x] Entidad JPA: `Movimiento`
+- [x] DTOs: `MovimientoCreateDTO`, `MovimientoResponseDTO`
+- [x] Mapper: `MovimientoMapper` (SRP)
+- [x] Repositorio: `MovimientoRepository` (con query `sumValorByCuentaId`)
+- [x] Service: `MovimientoService` (interfaz) + `MovimientoServiceImpl` (validación saldo + registro)
+- [x] Controller: `MovimientoController` (POST + GET)
+- [x] Excepciones: `InsufficientBalanceException` (422), `InvalidMovementException` (400)
+- [x] GlobalExceptionHandler extendido con nuevos handlers
+- [x] Strategy Pattern: `TipoMovimientoStrategy`, `DepositoStrategy`, `RetiroStrategy`, `TipoMovimientoResolver`
 
 #### Checklist Tests
-- [ ] `MovimientoServiceTest` (12 tests)
-- [ ] `MovimientoRepositoryTest` (2 tests)
-- [ ] `MovimientoControllerIntegrationTest` (12 tests)
+- [x] `MovimientoServiceTest` (12 tests)
+- [x] `MovimientoRepositoryTest` (2 tests)
+- [x] `MovimientoControllerIntegrationTest` (12 tests)
 
 ---
 
@@ -97,17 +103,17 @@
 | Fase | Estado |
 |------|--------|
 | **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
-| **Implementación** | `[ ]` IN_PROGRESS → `[ ]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
-- [ ] DTOs: `ReporteRequest`, `ReporteResponseDTO` (con `@JsonProperty` español)
-- [ ] Query JPQL en `MovimientoRepository`: filtro por clienteId + rango fechas
-- [ ] Service: `ReporteService` (filtro + validación fechas + mapeo)
-- [ ] Controller: `ReporteController` (GET `/reportes`)
-- [ ] Excepción: `InvalidDateRangeException`
+- [x] DTOs: `ReporteRequest`, `ReporteResponseDTO` (con `@JsonProperty` español)
+- [x] Query JPQL en `MovimientoRepository`: filtro por clienteId + rango fechas
+- [x] Service: `ReporteService` (filtro + validación fechas + mapeo)
+- [x] Controller: `ReporteController` (GET `/reportes`)
+- [x] Excepción: `InvalidDateRangeException`
 
 #### Checklist Tests
 - [ ] `ReporteServiceTest` (8 tests)
@@ -122,6 +128,6 @@
 |------|--------------|----|---------------|----------|---------|----|
 | SPEC-001 | ms-clientes-personas | CRUD Clientes | `[ ]` | `[ ]` (13) | `[ ]` (14) | `[ ]` |
 | SPEC-002 | ms-cuentas-movimientos | CRUD Cuentas | `[ ]` | `[ ]` (12) | `[ ]` (14) | `[ ]` |
-| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[ ]` | `[ ]` (14) | `[ ]` (12) | `[ ]` |
-| SPEC-004 | ms-cuentas-movimientos | Reportes | `[ ]` | `[ ]` (9) | `[ ]` (9) | `[ ]` |
+| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[x]` (14) | `[x]` (12) | `[ ]` |
+| SPEC-004 | ms-cuentas-movimientos | Reportes | `[x]` | `[x]` (9) | `[x]` (9) | `[ ]` |
 | **Totales** | | | | **48 tests** | **49 tests** | |

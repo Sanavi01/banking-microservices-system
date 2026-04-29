@@ -1,6 +1,6 @@
 ---
 id: SPEC-004
-status: DRAFT
+status: APPROVED
 feature: hu-04-reportes
 created: 2026-04-28
 updated: 2026-04-28

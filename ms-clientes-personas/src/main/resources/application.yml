@@ -1,0 +1,43 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ms-clientes-personas
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_clientes
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    template:
+      retry:
+        enabled: true
+        initial-interval: 2s
+        max-attempts: 5
+        multiplier: 2
+
+banking:
+  rabbitmq:
+    exchange: banking.exchange
+    routing:
+      cliente-creado: cliente.creado
+      cliente-actualizado: cliente.actualizado
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
