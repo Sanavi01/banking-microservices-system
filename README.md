@@ -1,185 +1,172 @@
-# ASDD — Agent Spec-Driven Development
+# Sistema Bancario de Microservicios
 
-Framework de desarrollo asistido por IA que transforma requerimientos en código funcional mediante agentes especializados orquestados. Garantiza calidad y trazabilidad a través de especificaciones técnicas aprobadas antes de cualquier implementación.
+Prueba técnica — Arquitectura Microservicio (2023)
+
+**Stack:** Java 21 + Spring Boot 4.0.6 + JPA/Hibernate + PostgreSQL + RabbitMQ + Gradle
+
+---
+
+## Arquitectura
 
 ```
-Requerimiento → Spec → [Backend ∥ Frontend ∥ DB] → [Tests BE ∥ Tests FE] → QA → Docs
+┌──────────────────────────┐       RabbitMQ        ┌──────────────────────────┐
+│  ms-clientes-personas    │ ◄──────────────────►  │  ms-cuentas-movimientos   │
+│  :8081 /clientes         │  cliente.creado        │  :8082 /cuentas           │
+│                          │  cliente.actualizado   │         /movimientos      │
+│  Persona ← Cliente       │                       │         /reportes         │
+│  PostgreSQL :5432        │                       │  Cuenta, Movimiento       │
+└──────────────────────────┘                       │  PostgreSQL :5433          │
+                                                   └──────────────────────────┘
 ```
 
 ---
 
-## Compatibilidad
+## Requisitos
 
-| Herramienta | Configuración | Carpeta de agentes |
-|-------------|---------------|--------------------|
-| **Claude Code CLI** | `.claude/settings.json` | `.claude/agents/` |
-| **GitHub Copilot** | `.github/copilot-instructions.md` | `.github/agents/` |
-
-Ambas herramientas comparten el mismo flujo, las mismas specs y los mismos lineamientos. Solo difiere la carpeta de entrada de los agentes.
+- Java 21
+- Docker + Docker Compose
+- Gradle (incluido vía wrapper)
 
 ---
 
-## Instalación
-
-### Claude Code CLI
-
-1. Instala Claude Code: https://claude.ai/code
-2. Autentícate con tu cuenta Anthropic
-3. Clona este repositorio en tu proyecto
-4. Copia `.claude/` a la raíz de tu proyecto
+## Inicio rápido (Docker Compose)
 
 ```bash
-cp -r .claude/ /tu-proyecto/.claude/
-cp -r .github/ /tu-proyecto/.github/
+# Compilar JARs
+cd ms-clientes-personas && ./gradlew bootJar && cd ..
+cd ms-cuentas-movimientos && ./gradlew bootJar && cd ..
+
+# Levantar todo
+docker compose up -d --build
 ```
 
-### GitHub Copilot
+### Servicios
 
-1. Instala la extensión **GitHub Copilot Chat** en VS Code
-2. Activa el uso de instruction files en tu settings.json de VS Code:
+| Servicio | URL | Descripción |
+|----------|-----|-------------|
+| ms-clientes-personas | http://localhost:8081 | CRUD Clientes |
+| ms-cuentas-movimientos | http://localhost:8082 | CRUD Cuentas + Movimientos + Reportes |
+| RabbitMQ UI | http://localhost:15672 | guest/guest |
+| pgAdmin | http://localhost:5050 | admin@sofka.com/admin |
 
-```json
-{
-  "github.copilot.chat.codeGeneration.useInstructionFiles": true
-}
-```
+### Swagger UI
 
-3. Copia `.github/` a la raíz de tu proyecto
+| Microservicio | Swagger |
+|--------------|---------|
+| ms-clientes-personas | http://localhost:8081/swagger-ui.html |
+| ms-cuentas-movimientos | http://localhost:8082/swagger-ui.html |
 
 ---
 
-## Flujo de trabajo
+## Endpoints
 
-### Opción A — Orquestación automática completa
+### ms-clientes-personas (`/clientes`)
 
-```
-/asdd-orchestrate nombre-feature
-```
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | /clientes | Crear cliente |
+| GET | /clientes | Listar todos |
+| GET | /clientes/{clienteId} | Obtener por ID |
+| PUT | /clientes/{clienteId} | Actualizar completo |
+| PATCH | /clientes/{clienteId} | Actualizar parcial |
+| DELETE | /clientes/{clienteId} | Eliminar |
 
-El Orchestrator gestiona todo: genera la spec, espera aprobación, ejecuta fases en paralelo y reporta el estado al final.
+### ms-cuentas-movimientos
 
-### Opción B — Control manual paso a paso
+#### `/cuentas`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | /cuentas | Crear cuenta |
+| GET | /cuentas | Listar todas |
+| GET | /cuentas/{id} | Obtener por ID |
+| PUT | /cuentas/{id} | Actualizar completo |
+| PATCH | /cuentas/{id} | Actualizar parcial |
+| DELETE | /cuentas/{id} | Eliminar |
+
+#### `/movimientos`
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | /movimientos | Registrar movimiento |
+| GET | /movimientos | Listar todos |
+| GET | /movimientos/{id} | Obtener por ID |
+
+#### `/reportes`
+
+| Método | Ruta | Query Params |
+|--------|------|-------------|
+| GET | /reportes | fechaInicio, fechaFin, clienteId |
+
+---
+
+## Desarrollo local
 
 ```bash
-# 1. Generar especificación técnica
-/generate-spec nombre-feature
+# Infraestructura
+docker compose up -d postgres-clientes postgres-cuentas rabbitmq pgadmin
 
-# 2. Revisar y aprobar la spec generada en .github/specs/<feature>.spec.md
-#    Cambiar el campo:  status: DRAFT  →  status: APPROVED
+# ms-clientes-personas (terminal 1)
+cd ms-clientes-personas && ./gradlew bootRun
 
-# 3. Implementar backend y frontend (se pueden ejecutar en paralelo)
-/implement-backend nombre-feature
-/implement-frontend nombre-feature
-
-# 4. Generar tests
-/unit-testing nombre-feature
-
-# 5. Análisis QA
-/gherkin-case-generator
-/risk-identifier
-```
-
-> **Regla de Oro**: Ningún agente escribe código si la spec no tiene `status: APPROVED`.
-
----
-
-## Skills disponibles
-
-| Comando | Qué hace |
-|---------|----------|
-| `/asdd-orchestrate` | Orquesta el flujo ASDD completo |
-| `/generate-spec` | Genera spec técnica en `.github/specs/` |
-| `/implement-backend` | Implementa el backend según la spec aprobada |
-| `/implement-frontend` | Implementa el frontend según la spec aprobada |
-| `/unit-testing` | Genera tests unitarios e integración |
-| `/gherkin-case-generator` | Genera escenarios Given-When-Then y datos de prueba |
-| `/risk-identifier` | Clasifica riesgos de calidad (Alto / Medio / Bajo) |
-| `/automation-flow-proposer` | Propone flujos a automatizar con análisis de ROI |
-| `/performance-analyzer` | Define estrategia de performance testing con k6 |
-
----
-
-## Agentes disponibles
-
-| Agente | Fase | Responsabilidad |
-|--------|------|-----------------|
-| `orchestrator` | Entry point | Coordina el flujo completo |
-| `spec-generator` | 1 | Genera especificaciones técnicas |
-| `backend-developer` | 2 | Rutas, servicios, repositorios |
-| `frontend-developer` | 2 | Páginas, componentes, hooks |
-| `database-agent` | 2 | Modelos, migrations, seeders |
-| `test-engineer-backend` | 3 | Tests unitarios e integración backend |
-| `test-engineer-frontend` | 3 | Tests unitarios y e2e frontend |
-| `qa-agent` | 4 | Estrategia QA, Gherkin, riesgos, performance |
-| `documentation-agent` | 5 | README, API docs, ADRs |
-
-**Claude Code**: invoca agentes con `@nombre-agente` o con skills `/comando`
-**GitHub Copilot**: usa `@nombre-agente` en el chat o los prompts en `.github/prompts/`
-
----
-
-## Ciclo de vida de una spec
-
-```
-DRAFT → APPROVED → IN_PROGRESS → IMPLEMENTED → DEPRECATED
-```
-
-Las specs viven en `.github/specs/<feature>.spec.md`. Solo pasan a implementación cuando el usuario las aprueba manualmente cambiando el campo `status`.
-
----
-
-## Estructura del repositorio
-
-```
-.
-├── .claude/                        ← Configuración Claude Code CLI
-│   ├── settings.json               ← Modelo, permisos, hooks
-│   ├── agents/                     ← Sub-agentes Claude Code
-│   ├── skills/                     ← Skills invocables con /comando
-│   ├── rules/                      ← Reglas automáticas por tipo de archivo
-│   ├── hooks/                      ← Scripts pre/post edit
-│   └── docs/lineamientos/          ← Dev guidelines y QA guidelines
-│
-├── .github/                        ← Configuración GitHub Copilot
-│   ├── copilot-instructions.md     ← Instrucciones globales + diccionario de dominio
-│   ├── AGENTS.md                   ← Reglas de Oro para todos los agentes
-│   ├── agents/                     ← Agentes Copilot
-│   ├── skills/                     ← Skills portables
-│   ├── instructions/               ← Instrucciones por scope (backend, frontend, tests)
-│   ├── prompts/                    ← Prompts rápidos reutilizables
-│   ├── requirements/               ← Requerimientos de entrada (input)
-│   └── specs/                      ← Especificaciones técnicas (output de fase 1)
+# ms-cuentas-movimientos (terminal 2)
+cd ms-cuentas-movimientos && ./gradlew bootRun
 ```
 
 ---
 
-## Ejemplo completo
+## Pruebas
 
 ```bash
-# 1. Escribe el requerimiento
-echo "El usuario debe poder convertir monedas en tiempo real" \
-  > .github/requirements/conversiones.md
+# Ejecutar tests
+cd ms-clientes-personas && ./gradlew test && cd ..
+cd ms-cuentas-movimientos && ./gradlew test && cd ..
+```
 
-# 2. Genera la spec
-/generate-spec conversiones
+| Microservicio | Tests |
+|--------------|-------|
+| ms-clientes-personas | 28 |
+| ms-cuentas-movimientos | 71 |
+| **Total** | **99** |
 
-# 3. Abre .github/specs/conversiones.spec.md, revisa y cambia:
-#    status: DRAFT  →  status: APPROVED
+---
 
-# 4. Orquesta la implementación
-/asdd-orchestrate conversiones
+## Patrones de diseño
 
-# → Backend implementado
-# → Frontend implementado
-# → Tests generados
-# → Análisis QA completado
+| Patrón | Ubicación | Propósito |
+|--------|-----------|-----------|
+| **Strategy** | `strategy/DepositoStrategy`, `RetiroStrategy` | Tipos de movimiento extensibles (OCP) |
+| **Repository** | `repository/*` | Abstracción de acceso a datos |
+| **Mapper** | `mapper/*` | Separación Entity ↔ DTO (SRP) |
+| **Template Method** | `BaseEntity.onCreate/onUpdate` | Timestamps automáticos |
+| **Dependency Injection** | `@RequiredArgsConstructor` | Inyección por constructor |
+| **Global Exception Handler** | `@ControllerAdvice` | Manejo centralizado de errores |
+
+---
+
+## Comunicación asíncrona
+
+Al crear/actualizar un cliente en `ms-clientes-personas`, se publica un evento JSON a RabbitMQ:
+
+```
+banking.exchange (topic)
+├── cliente.creado    → cliente.queue  → ms-cuentas-movimientos (replica cliente)
+└── cliente.actualizado → cliente.queue → ms-cuentas-movimientos (actualiza cliente)
 ```
 
 ---
 
-## Documentación interna
+## Entregables
 
-- `.github/README.md` — Guía detallada para GitHub Copilot
-- `.claude/README.md` — Guía detallada para Claude Code CLI
-- `.github/AGENTS.md` — Reglas de Oro y lineamientos de todos los agentes
-- `.github/specs/README.md` — Convenciones y ciclo de vida de specs
+- [x] Repositorio Git público
+- [x] 2 microservicios Spring Boot
+- [x] Comunicación asíncrona (RabbitMQ)
+- [x] CRUD endpoints (F1-F4)
+- [x] Validación de saldo (F3)
+- [x] Reportes (F4)
+- [x] Pruebas unitarias + integración (F5, F6)
+- [x] Docker Compose (F7)
+- [x] BaseDatos.sql
+- [x] Colección Postman
+- [x] Swagger UI
+- [x] Patrones SOLID + Strategy
