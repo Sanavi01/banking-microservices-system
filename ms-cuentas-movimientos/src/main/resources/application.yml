@@ -30,3 +30,9 @@ banking:
   rabbitmq:
     exchange: banking.exchange
     queue: cliente.queue
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
