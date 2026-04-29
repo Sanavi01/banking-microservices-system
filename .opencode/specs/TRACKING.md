@@ -74,10 +74,10 @@
 
 | Fase | Estado |
 |------|--------|
-| **Spec** | `[ ]` DRAFT → `[ ]` APPROVED |
+| **Spec** | `[x]` DRAFT → `[x]` APPROVED |
 | **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
-| **Tests Unitarios** | `[ ]` PENDING → `[ ]` PASSING |
-| **Tests Integración** | `[ ]` PENDING → `[ ]` PASSING |
+| **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
+| **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
 | **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
 
 #### Checklist Implementación
@@ -92,9 +92,9 @@
 - [x] Strategy Pattern: `TipoMovimientoStrategy`, `DepositoStrategy`, `RetiroStrategy`, `TipoMovimientoResolver`
 
 #### Checklist Tests
-- [ ] `MovimientoServiceTest` (12 tests)
-- [ ] `MovimientoRepositoryTest` (2 tests)
-- [ ] `MovimientoControllerIntegrationTest` (12 tests)
+- [x] `MovimientoServiceTest` (12 tests)
+- [x] `MovimientoRepositoryTest` (2 tests)
+- [x] `MovimientoControllerIntegrationTest` (12 tests)
 
 ---
 
@@ -128,6 +128,6 @@
 |------|--------------|----|---------------|----------|---------|----|
 | SPEC-001 | ms-clientes-personas | CRUD Clientes | `[ ]` | `[ ]` (13) | `[ ]` (14) | `[ ]` |
 | SPEC-002 | ms-cuentas-movimientos | CRUD Cuentas | `[ ]` | `[ ]` (12) | `[ ]` (14) | `[ ]` |
-| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[ ]` (14) | `[ ]` (12) | `[ ]` |
+| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[x]` (14) | `[x]` (12) | `[ ]` |
 | SPEC-004 | ms-cuentas-movimientos | Reportes | `[ ]` | `[ ]` (9) | `[ ]` (9) | `[ ]` |
 | **Totales** | | | | **48 tests** | **49 tests** | |

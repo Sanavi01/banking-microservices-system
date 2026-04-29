@@ -38,7 +38,7 @@ public class Movimiento extends BaseEntity {
     private Cuenta cuenta;
 
     @PrePersist
-    protected void onCreate() {
+    protected void initFecha() {
         this.fecha = LocalDateTime.now();
     }
 }
