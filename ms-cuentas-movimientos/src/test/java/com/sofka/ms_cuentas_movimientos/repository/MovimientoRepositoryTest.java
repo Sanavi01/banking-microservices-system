@@ -11,6 +11,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,5 +84,38 @@ class MovimientoRepositoryTest {
         Optional<BigDecimal> sum = movimientoRepository.sumValorByCuentaId(cuentaId);
         assertThat(sum).isPresent();
         assertThat(sum.get()).isEqualByComparingTo("100.00"); // 300 + (-200) = 100
+    }
+
+    @Test
+    @DisplayName("UT-4.9: findByCuentaClienteIdAndFechaBetween filtra correctamente")
+    void findByCuentaClienteIdAndFechaBetween_shouldReturnFiltered() {
+        Cuenta cuenta = cuentaRepository.findById(cuentaId).orElseThrow();
+        cuenta.setClienteId("repo-filter-client");
+        cuentaRepository.save(cuenta);
+
+        Movimiento m1 = new Movimiento();
+        m1.setCuenta(cuenta);
+        m1.setValor(new BigDecimal("100.00"));
+        m1.setSaldo(new BigDecimal("1100.00"));
+        m1.setTipoMovimiento("Depósito");
+        m1.setFecha(LocalDateTime.of(2022, 2, 10, 10, 0));
+        movimientoRepository.save(m1);
+
+        Movimiento m2 = new Movimiento();
+        m2.setCuenta(cuenta);
+        m2.setValor(new BigDecimal("200.00"));
+        m2.setSaldo(new BigDecimal("1300.00"));
+        m2.setTipoMovimiento("Depósito");
+        m2.setFecha(LocalDateTime.of(2022, 3, 10, 10, 0));
+        movimientoRepository.save(m2);
+
+        List<Movimiento> result = movimientoRepository
+                .findByCuentaClienteIdAndFechaBetweenOrderByFechaAsc(
+                    "repo-filter-client",
+                    LocalDateTime.of(2022, 2, 1, 0, 0),
+                    LocalDateTime.of(2022, 2, 28, 23, 59, 59));
+
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getValor()).isEqualByComparingTo("100.00");
     }
 }
