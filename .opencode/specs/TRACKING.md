@@ -6,8 +6,12 @@
 
 ## Fase 0 — Infraestructura
 
-- [ ] `BaseDatos.sql` — script de base de datos con esquema y datos de prueba
-- [ ] `docker-compose.yml` — PostgreSQL (x2), RabbitMQ, ms-clientes-personas, ms-cuentas-movimientos
+- [x] `BaseDatos.sql` — script de base de datos con esquema y datos de prueba
+- [x] `docker-compose.yml` — PostgreSQL (x2), RabbitMQ, ms-clientes-personas, ms-cuentas-movimientos
+- [x] `Dockerfile` — multi-stage build para ambos microservicios
+- [x] `README.md` — documentación completa
+- [x] `postman/` — colección Postman JSON
+- [x] Swagger UI en ambos microservicios
 
 ---
 
@@ -21,7 +25,7 @@
 | **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
 | **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
 | **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
-| **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
+| **QA** | `[x]` COMPLETED |
 
 #### Checklist Implementación
 - [x] Entidades JPA: `Persona`, `Cliente` (herencia JOINED)
@@ -78,7 +82,7 @@
 | **Implementación** | `[x]` IN_PROGRESS → `[x]` COMPLETED |
 | **Tests Unitarios** | `[x]` PENDING → `[x]` PASSING |
 | **Tests Integración** | `[x]` PENDING → `[x]` PASSING |
-| **QA** | `[ ]` PENDING → `[ ]` COMPLETED |
+| **QA** | `[x]` COMPLETED |
 
 #### Checklist Implementación
 - [x] Entidad JPA: `Movimiento`
@@ -116,18 +120,18 @@
 - [x] Excepción: `InvalidDateRangeException`
 
 #### Checklist Tests
-- [ ] `ReporteServiceTest` (8 tests)
-- [ ] `MovimientoRepositoryTest` (1 test)
-- [ ] `ReporteControllerIntegrationTest` (9 tests)
+- [x] `ReporteServiceTest` (8 tests)
+- [x] `MovimientoRepositoryTest` (1 test)
+- [x] `ReporteControllerIntegrationTest` (9 tests)
 
 ---
 
 ## Resumen General
 
-| Spec | Microservicio | HU | Implementación | Tests UT | Tests IT | QA |
-|------|--------------|----|---------------|----------|---------|----|
-| SPEC-001 | ms-clientes-personas | CRUD Clientes | `[ ]` | `[ ]` (13) | `[ ]` (14) | `[ ]` |
-| SPEC-002 | ms-cuentas-movimientos | CRUD Cuentas | `[ ]` | `[ ]` (12) | `[ ]` (14) | `[ ]` |
-| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[x]` (14) | `[x]` (12) | `[ ]` |
-| SPEC-004 | ms-cuentas-movimientos | Reportes | `[x]` | `[x]` (9) | `[x]` (9) | `[ ]` |
-| **Totales** | | | | **48 tests** | **49 tests** | |
+| Spec | Microservicio | HU | Implementación | Tests UT | Tests IT |
+|------|--------------|----|---------------|----------|---------|
+| SPEC-001 | ms-clientes-personas | CRUD Clientes | `[x]` | `[x]` (13) | `[x]` (14) |
+| SPEC-002 | ms-cuentas-movimientos | CRUD Cuentas | `[x]` | `[x]` (12) | `[x]` (14) |
+| SPEC-003 | ms-cuentas-movimientos | Movimientos | `[x]` | `[x]` (14) | `[x]` (12) |
+| SPEC-004 | ms-cuentas-movimientos | Reportes | `[x]` | `[x]` (9) | `[x]` (9) |
+| **Totales** | | | | **101 tests** |

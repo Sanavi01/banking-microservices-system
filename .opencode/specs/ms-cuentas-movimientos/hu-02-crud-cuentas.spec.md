@@ -401,8 +401,6 @@ public class ClienteEventConsumer {
 - [x] `ClienteEventConsumerTest` — 1 test (UT-2.12)
 
 ### Pruebas de Integración
-- [ ] `CuentaControllerIntegrationTest` — 14 tests (IT-2.1 a IT-2.14)
+- [x] `CuentaControllerIntegrationTest` — 14 tests (IT-2.1 a IT-2.14)
 
-### QA
-- [ ] Ejecutar `/gherkin-case-generator` para HU-02
-- [ ] Ejecutar `/risk-identifier` para HU-02
+

@@ -464,27 +464,25 @@ VALUES ('Jose Lema', 'Masculino', 30, '1234567890', 'Otavalo sn y principal', '0
 ## 4. TAREAS DE IMPLEMENTACIÓN
 
 ### Backend
-- [ ] Crear proyecto `ms-clientes-personas` con Spring Boot + Gradle (puerto 8081)
-- [ ] Configurar `application.yml` con PostgreSQL (`db_clientes`) y RabbitMQ
-- [ ] Implementar entidad `Persona` con herencia JOINED
-- [ ] Implementar entidad `Cliente` (extiende Persona)
-- [ ] Implementar `ClienteCreateDTO`, `ClienteUpdateDTO`, `ClientePatchDTO`, `ClienteResponseDTO`
-- [ ] Implementar `PersonaRepository` (Spring Data JPA)
-- [ ] Implementar `ClienteRepository` (Spring Data JPA)
-- [ ] Implementar `ClienteService` — lógica CRUD + hash de contraseña + validaciones
-- [ ] Implementar `ClienteController` con endpoints GET/POST/PUT/PATCH/DELETE
-- [ ] Implementar `ClienteEventPublisher` (RabbitMQ Producer)
-- [ ] Configurar `RabbitMQConfig` (exchange, routing keys)
-- [ ] Implementar `GlobalExceptionHandler` con `@ControllerAdvice`
-- [ ] Implementar `ResourceNotFoundException` y `DuplicateResourceException`
+- [x] Crear proyecto `ms-clientes-personas` con Spring Boot + Gradle (puerto 8081)
+- [x] Configurar `application.yml` con PostgreSQL (`db_clientes`) y RabbitMQ
+- [x] Implementar entidad `Persona` con herencia JOINED
+- [x] Implementar entidad `Cliente` (extiende Persona)
+- [x] Implementar `ClienteCreateDTO`, `ClienteUpdateDTO`, `ClientePatchDTO`, `ClienteResponseDTO`
+- [x] Implementar `PersonaRepository` (Spring Data JPA)
+- [x] Implementar `ClienteRepository` (Spring Data JPA)
+- [x] Implementar `ClienteService` — lógica CRUD + hash de contraseña + validaciones
+- [x] Implementar `ClienteController` con endpoints GET/POST/PUT/PATCH/DELETE
+- [x] Implementar `ClienteEventPublisher` (RabbitMQ Producer)
+- [x] Configurar `RabbitMQConfig` (exchange, routing keys)
+- [x] Implementar `GlobalExceptionHandler` con `@ControllerAdvice`
+- [x] Implementar `ResourceNotFoundException` y `DuplicateResourceException`
 
 ### Pruebas Unitarias
-- [ ] `ClienteServiceTest` — 11 tests (UT-1.1 a UT-1.11)
-- [ ] `ClienteRepositoryTest` — 2 tests con `@DataJpaTest` (UT-1.12, UT-1.13)
+- [x] `ClienteServiceTest` — 11 tests (UT-1.1 a UT-1.11)
+- [x] `ClienteRepositoryTest` — 2 tests con `@DataJpaTest` (UT-1.12, UT-1.13)
 
 ### Pruebas de Integración
-- [ ] `ClienteControllerIntegrationTest` — 14 tests con `@SpringBootTest` + `MockMvc` (IT-1.1 a IT-1.14)
+- [x] `ClienteControllerIntegrationTest` — 14 tests con `@SpringBootTest` + `MockMvc` (IT-1.1 a IT-1.14)
 
-### QA
-- [ ] Ejecutar `/gherkin-case-generator` para HU-01
-- [ ] Ejecutar `/risk-identifier` para HU-01
+
