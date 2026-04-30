@@ -23,8 +23,6 @@ class CuentaRepositoryTest {
     @Autowired
     private CuentaRepository cuentaRepository;
 
-    private Cuenta savedCuenta;
-
     @BeforeEach
     void setUp() {
         Cuenta cuenta = new Cuenta();
@@ -33,7 +31,7 @@ class CuentaRepositoryTest {
         cuenta.setSaldoInicial(new BigDecimal("2000.00"));
         cuenta.setEstado(true);
         cuenta.setClienteId("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
-        savedCuenta = cuentaRepository.save(cuenta);
+        cuentaRepository.save(cuenta);
     }
 
     @Test

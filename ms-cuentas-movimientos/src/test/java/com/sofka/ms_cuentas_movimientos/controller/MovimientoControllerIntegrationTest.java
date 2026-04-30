@@ -30,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@SuppressWarnings("rawtypes")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("MovimientoController Integration Tests")
 class MovimientoControllerIntegrationTest {

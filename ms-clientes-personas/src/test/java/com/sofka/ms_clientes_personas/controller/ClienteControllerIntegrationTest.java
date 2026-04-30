@@ -33,6 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("ClienteController Integration Tests")
+@SuppressWarnings({"rawtypes", "unchecked"})
 class ClienteControllerIntegrationTest {
 
     @LocalServerPort
