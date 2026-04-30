@@ -378,22 +378,20 @@ Pruebas de validación de estos casos:
 ## 4. TAREAS DE IMPLEMENTACIÓN
 
 ### Backend
-- [ ] Crear entidad `Movimiento`
-- [ ] Implementar `MovimientoCreateDTO`, `MovimientoResponseDTO`
-- [ ] Implementar `MovimientoRepository` con query `sumValorByCuentaId`
-- [ ] Implementar `MovimientoService` con lógica de registro + validación de saldo
-- [ ] Implementar `MovimientoController` con GET (listar, por ID) y POST (registrar)
-- [ ] Implementar `InsufficientBalanceException` (HTTP 422)
-- [ ] Implementar `InvalidMovementException` (HTTP 400)
-- [ ] Extender `GlobalExceptionHandler` con handlers para las nuevas excepciones
+- [x] Crear entidad `Movimiento`
+- [x] Implementar `MovimientoCreateDTO`, `MovimientoResponseDTO`
+- [x] Implementar `MovimientoRepository` con query `sumValorByCuentaId`
+- [x] Implementar `MovimientoService` con lógica de registro + validación de saldo
+- [x] Implementar `MovimientoController` con GET (listar, por ID) y POST (registrar)
+- [x] Implementar `InsufficientBalanceException` (HTTP 422)
+- [x] Implementar `InvalidMovementException` (HTTP 400)
+- [x] Extender `GlobalExceptionHandler` con handlers para las nuevas excepciones
 
 ### Pruebas Unitarias
-- [ ] `MovimientoServiceTest` — 12 tests (UT-3.1 a UT-3.12)
-- [ ] `MovimientoRepositoryTest` — 2 tests (UT-3.13, UT-3.14)
+- [x] `MovimientoServiceTest` — 12 tests (UT-3.1 a UT-3.12)
+- [x] `MovimientoRepositoryTest` — 2 tests (UT-3.13, UT-3.14)
 
 ### Pruebas de Integración
-- [ ] `MovimientoControllerIntegrationTest` — 12 tests (IT-3.1 a IT-3.12)
+- [x] `MovimientoControllerIntegrationTest` — 12 tests (IT-3.1 a IT-3.12)
 
-### QA
-- [ ] Ejecutar `/gherkin-case-generator` para HU-03
-- [ ] Ejecutar `/risk-identifier` para HU-03 — clasificar riesgo ALTO por manejo de saldos
+

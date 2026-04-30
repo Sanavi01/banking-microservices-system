@@ -322,21 +322,19 @@ Test de validación: **IT-4.1** debe producir EXACTAMENTE este JSON (ver secció
 ## 4. TAREAS DE IMPLEMENTACIÓN
 
 ### Backend
-- [ ] Implementar `ReporteRequest` (query params con validación)
-- [ ] Implementar `ReporteResponseDTO` con `@JsonProperty` para nombres en español
-- [ ] Implementar query JPQL en `MovimientoRepository`: `findByCuentaClienteIdAndFechaBetweenOrderByFechaAsc`
-- [ ] Implementar `ReporteService` — lógica de filtro, validación de fechas, mapeo a DTO
-- [ ] Implementar `ReporteController` con GET `/reportes`
-- [ ] Implementar `InvalidDateRangeException` (HTTP 400)
-- [ ] Extender `GlobalExceptionHandler`
+- [x] Implementar `ReporteRequest` (query params con validación)
+- [x] Implementar `ReporteResponseDTO` con `@JsonProperty` para nombres en español
+- [x] Implementar query JPQL en `MovimientoRepository`: `findByCuentaClienteIdAndFechaBetweenOrderByFechaAsc`
+- [x] Implementar `ReporteService` — lógica de filtro, validación de fechas, mapeo a DTO
+- [x] Implementar `ReporteController` con GET `/reportes`
+- [x] Implementar `InvalidDateRangeException` (HTTP 400)
+- [x] Extender `GlobalExceptionHandler`
 
 ### Pruebas Unitarias
-- [ ] `ReporteServiceTest` — 8 tests (UT-4.1 a UT-4.8)
-- [ ] `MovimientoRepositoryTest` — 1 test de query (UT-4.9)
+- [x] `ReporteServiceTest` — 8 tests (UT-4.1 a UT-4.8)
+- [x] `MovimientoRepositoryTest` — 1 test de query (UT-4.9)
 
 ### Pruebas de Integración
-- [ ] `ReporteControllerIntegrationTest` — 9 tests (IT-4.1 a IT-4.9)
+- [x] `ReporteControllerIntegrationTest` — 9 tests (IT-4.1 a IT-4.9)
 
-### QA
-- [ ] Ejecutar `/gherkin-case-generator` para HU-04
-- [ ] Ejecutar `/risk-identifier` para HU-04
+
